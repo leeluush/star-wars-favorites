@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchMovieImage } from '../services/api' // Update the import path accordingly
+import { fetchMovieImage } from '../services/api' 
 
 const useFetchMovieImage = (title, apiKey) => {
   const [imageUrl, setImageUrl] = useState('default-background.png');

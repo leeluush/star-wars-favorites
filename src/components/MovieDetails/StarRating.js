@@ -30,10 +30,8 @@ export default function StarRating({
   color = "#f39c12",
   size = 48,
   className = "",
-  messages = [],
   defaultRating = 0,
   onSetRating,
-  movieId,
   
 }) {
   const [rating, setRating] = useState(defaultRating);
