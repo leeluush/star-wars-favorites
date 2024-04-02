@@ -1,38 +1,225 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  color: white;
+  font-family: "Arial", sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  --appBackgroundImage: url("../public/default-background.png"); 
+  position: relative;
+  overflow: hidden;
+  padding-top: 40px;
+}
+
+
+.App::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: var(--appBackgroundImage); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: blur(15px);
+  transform: scale(1.2);
+  z-index: -1;
+}
+
+.content-container {
+  width: 80%;
+  margin: auto;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "details"
+    "list";
+}
+
+.movie-list {
+  grid-area: list;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr;
+  gap: 20px;
+  overflow-x: auto;
+  align-items: start;
+  padding: 20px 0;
+  width: 100%;
+  margin: auto;
+}
+
+.movie-item {
+  width: 100%;
+  
+  background-image: var(--movieImageUrl);
+  height: 210px;
+  width: 150px;
+  position: relative;
+
+  background-size: cover;
+  background-position: center;
+  font-size: 10px;
+  overflow: hidden; 
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.movie-item-content {
+  padding: 5px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MovieDetails {
+  background-image: var(--backdropUrl);
+  grid-area: details;
+  background-color: rgba(22, 22, 22, 0.7);
+  padding: 20px;
+  font-size: 3rem; 
+  font-weight: 700; 
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
+  margin: 0;
+  border-radius: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  width: 100%;
+  box-sizing: border-box;
+  height: 370px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+
+}
+
+.MovieDetails::after {
+  content: '';
+  position: absolute;
+  top: 10px; 
+  left: 10px; 
+  right: 10px; 
+  bottom: 10px; 
+  pointer-events: none; 
+  border: 2px solid #926a57; 
+  box-sizing: border-box; 
+  border-bottom: none; 
+  box-shadow: inset 0 0 15px 1px rgba(0, 0, 0, 0.5); 
+  z-index: -1;
+
+}
+
+
+.MovieDetailsHeader {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: flex-start; 
+}
+
+.MovieDetailsContent {
+  text-align: left;
+  max-width: 80%;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.MovieDetails h2,
+.MovieDetails p,
+.MovieDetails button {
+  color: #e0e0e0;
+}
+
+.MovieDetails h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.MovieDetails p {
+  font-size: 1.2rem;
+}
+
+.MovieDetails button {
+  background-color: transparent;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.MovieDetails button:hover {
+  background-color: transparent;
+}
+
+
+
+.MovieDetailsHeader, .MovieDetailsEpisode {
+  margin: 0;
+  padding: 0;
+}
+
+.StarRatingContainer {
+  margin-left: -10px;
+  margin-bottom: 20px;
+}
+
+
+.Loading {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+@media (max-width: 1024px) {
+  .movie-item {
+    width: 100%;
+    height: 20vw;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 768px) {
+  .movie-item {
+    width: 100%;
+    height: 25vw;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 480px) {
+  .movie-item {
+    width: 100%;
+    height: 35vw;
+  }
+}
+
+@media (max-width: 320px) {
+  .movie-item {
+    width: 100%;
+    height: 50vw;
   }
 }

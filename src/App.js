@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import MovieList from '@/components/MovieList/MovieList';
 import MovieDetails from '@/components/MovieDetails/MovieDetails';
-import './App.css'
+import useFetchMovieImage from './hooks/useFetchMovieImage'; 
+import './App.css';
 
 function App() {
   const initialFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
   const [favorites, setFavorites] = useState(initialFavorites);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  
+  const backgroundImageUrl = useFetchMovieImage(selectedMovie?.title);
 
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
-  const handleFavorite = (movie) => {
-    if (favorites.some(fav => fav.episode_id === movie.episode_id)) {
-      setFavorites(favorites.filter(fav => fav.episode_id !== movie.episode_id));
-    } else {
-      setFavorites([...favorites, movie]);
-    }
+  const handleMovieSelect = (movie) => {
+    setSelectedMovie(movie);
   };
 
-  function handleMovieSelect(movie) {
-    setSelectedMovie(movie);
-  }
-
   return (
-    <div className="App">
-      <MovieDetails movie={selectedMovie} favorites={favorites} onFavoriteToggle={handleFavorite} />
-      <MovieList onMovieSelect={handleMovieSelect}/>
+    <div className="App" style={{ '--appBackgroundImage': `url(${backgroundImageUrl})` }}>
+      <div className="content-container">
+        <MovieDetails
+          movie={selectedMovie}
+          favorites={favorites}
+          onFavoriteToggle={setFavorites}
+          backgroundImageUrl={backgroundImageUrl}
+
+        />
+        <MovieList onMovieSelect={handleMovieSelect}
+          selectedMovie={selectedMovie}
+          backgroundImageUrl={backgroundImageUrl} 
+        />
+      </div>
     </div>
   );
-
 }
 
 export default App;
